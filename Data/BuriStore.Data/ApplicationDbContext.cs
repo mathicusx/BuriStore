@@ -24,8 +24,6 @@
         {
         }
 
-        public DbSet<Setting> Settings { get; set; }
-
         public DbSet<Item> Items { get; set; }
 
         public DbSet<Component> Components { get; set; }

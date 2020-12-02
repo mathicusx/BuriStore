@@ -8,7 +8,6 @@
     using BuriStore.Data.Models;
     using BuriStore.Data.Repositories;
     using BuriStore.Data.Seeding;
-    using BuriStore.Services.Data;
     using BuriStore.Services.Mapping;
     using BuriStore.Services.Messaging;
     using BuriStore.Web.ViewModels;
@@ -63,7 +62,6 @@
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
