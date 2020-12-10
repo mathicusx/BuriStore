@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace BuriStore.Data.Migrations
+﻿namespace BuriStore.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +19,7 @@ namespace BuriStore.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -47,7 +48,7 @@ namespace BuriStore.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -60,7 +61,11 @@ namespace BuriStore.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -78,11 +83,6 @@ namespace BuriStore.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    ProcessorType = table.Column<string>(nullable: true),
-                    GraphicsCard = table.Column<string>(nullable: true),
-                    Ram = table.Column<string>(nullable: true),
-                    ScreenResolution = table.Column<int>(nullable: false),
-                    Storage = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -97,7 +97,7 @@ namespace BuriStore.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -118,7 +118,7 @@ namespace BuriStore.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -138,7 +138,7 @@ namespace BuriStore.Data.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -156,7 +156,7 @@ namespace BuriStore.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    RoleId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -182,7 +182,7 @@ namespace BuriStore.Data.Migrations
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -207,7 +207,7 @@ namespace BuriStore.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Brand = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: false)
+                    CategoryId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -224,10 +224,12 @@ namespace BuriStore.Data.Migrations
                 name: "Images",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
                     ItemId = table.Column<int>(nullable: false),
-                    Extension = table.Column<string>(nullable: true)
+                    Extension = table.Column<string>(nullable: true),
+                    RemoteImageUrl = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -241,25 +243,26 @@ namespace BuriStore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ItemComponent",
+                name: "ItemComponents",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ItemId = table.Column<int>(nullable: false),
-                    ComponentId = table.Column<int>(nullable: false)
+                    ComponentId = table.Column<int>(nullable: false),
+                    Type = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ItemComponent", x => x.Id);
+                    table.PrimaryKey("PK_ItemComponents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ItemComponent_Components_ComponentId",
+                        name: "FK_ItemComponents_Components_ComponentId",
                         column: x => x.ComponentId,
                         principalTable: "Components",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ItemComponent_Items_ItemId",
+                        name: "FK_ItemComponents_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "Id",
@@ -316,6 +319,11 @@ namespace BuriStore.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_IsDeleted",
+                table: "Categories",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Components_IsDeleted",
                 table: "Components",
                 column: "IsDeleted");
@@ -326,13 +334,13 @@ namespace BuriStore.Data.Migrations
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemComponent_ComponentId",
-                table: "ItemComponent",
+                name: "IX_ItemComponents_ComponentId",
+                table: "ItemComponents",
                 column: "ComponentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemComponent_ItemId",
-                table: "ItemComponent",
+                name: "IX_ItemComponents_ItemId",
+                table: "ItemComponents",
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
@@ -367,7 +375,7 @@ namespace BuriStore.Data.Migrations
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "ItemComponent");
+                name: "ItemComponents");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

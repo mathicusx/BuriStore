@@ -146,10 +146,24 @@ namespace BuriStore.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("Categories");
                 });
@@ -167,9 +181,6 @@ namespace BuriStore.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("GraphicsCard")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -177,18 +188,6 @@ namespace BuriStore.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProcessorType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ram")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ScreenResolution")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Storage")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -200,16 +199,23 @@ namespace BuriStore.Data.Migrations
 
             modelBuilder.Entity("BuriStore.Data.Models.Image", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Extension")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RemoteImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -268,13 +274,16 @@ namespace BuriStore.Data.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ComponentId");
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("ItemComponent");
+                    b.ToTable("ItemComponents");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

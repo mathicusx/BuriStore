@@ -13,17 +13,6 @@
 
         public string Name { get; set; }
 
-        public string ProcessorType { get; set; }
-
-        public string GraphicsCard { get; set; }
-
-        public string Ram { get; set; }
-
-        public int ScreenResolution { get; set; }
-
-        public string Storage { get; set; }
-
         public virtual ICollection<ItemComponent> Items { get; set; }
-
     }
 }

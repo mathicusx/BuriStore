@@ -28,6 +28,8 @@
 
         public DbSet<Component> Components { get; set; }
 
+        public DbSet<ItemComponent> ItemComponents { get; set; }
+
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Image> Images { get; set; }

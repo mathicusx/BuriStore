@@ -11,5 +11,7 @@
         public int ComponentId { get; set; }
 
         public virtual Component Component { get; set; }
+
+        public string Type { get; set; }
     }
 }
