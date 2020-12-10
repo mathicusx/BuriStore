@@ -2,6 +2,7 @@
 {
     using System.Diagnostics;
     using System.Linq;
+
     using BuriStore.Data;
     using BuriStore.Web.ViewModels;
     using BuriStore.Web.ViewModels.Home;
@@ -15,6 +16,7 @@
         {
             this.db = db;
         }
+
         public IActionResult Index()
         {
             var viewModel = new IndexViewModel

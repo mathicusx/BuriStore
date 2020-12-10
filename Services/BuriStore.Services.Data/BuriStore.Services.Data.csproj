@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\BuriStore.Data.Common\BuriStore.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\BuriStore.Data.Models\BuriStore.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\BuriStore.Web.ViewModels\BuriStore.Web.ViewModels.csproj" />
     <ProjectReference Include="..\BuriStore.Services.Mapping\BuriStore.Services.Mapping.csproj" />
   </ItemGroup>
 

@@ -23,6 +23,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                       @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                       {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Administration" asp-controller="Items" asp-action="Create">Add Item</a>
+                        </li>
+                       }
                     </ul>
                 </div>
             </div>

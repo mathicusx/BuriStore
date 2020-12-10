@@ -14,7 +14,7 @@
             this.Images = new HashSet<Image>();
         }
 
-        public string Brand { get; set; }
+        public string Name { get; set; }
 
         public string Description { get; set; }
 
