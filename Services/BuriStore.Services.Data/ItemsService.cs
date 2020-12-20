@@ -8,6 +8,7 @@
 
     using BuriStore.Data.Common.Repositories;
     using BuriStore.Data.Models;
+    using BuriStore.Services.Mapping;
     using BuriStore.Web.ViewModels.Items;
 
     public class ItemsService : IItemsService
@@ -29,6 +30,7 @@
             {
                 CategoryId = input.CategoryId,
                 Name = input.Name,
+                Price = input.Price,
                 Description = input.Description,
             };
 
@@ -49,6 +51,22 @@
 
             await this.itemsRepository.AddAsync(item);
             await this.itemsRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetAll<T>(int page, int itemsPerPage)
+        {
+            var items = this.itemsRepository.AllAsNoTracking()
+                .OrderByDescending(i => i.Id)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .To<T>()
+                .ToList();
+            return items;
+        }
+
+        public int GetCount()
+        {
+           return this.itemsRepository.All().Count();
         }
     }
 }

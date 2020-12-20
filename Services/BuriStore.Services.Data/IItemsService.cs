@@ -10,5 +10,10 @@
     public interface IItemsService
     {
         Task CreateAsync(CreateItemInputModel input);
+
+        IEnumerable<T> GetAll<T>(int page, int itemsPerPage);
+
+        public int GetCount();
+            
     }
 }

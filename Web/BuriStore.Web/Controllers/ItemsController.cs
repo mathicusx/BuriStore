@@ -14,7 +14,6 @@
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
-    [Area("Administration")]
     public class ItemsController : Controller
     {
         private readonly IItemsService itemsService;
@@ -47,5 +46,24 @@
             await this.itemsService.CreateAsync(input);
             return this.Redirect("/");
         }
+
+        public IActionResult All(int id = 1 )
+        {
+            const int itemsPerPage = 12;
+            var viewModel = new ItemsListViewModel
+            {
+                ItemsPerPage = itemsPerPage,
+                PageNumber = id,
+                ItemsCount = this.itemsService.GetCount(),
+                Items = this.itemsService.GetAll<ItemsInListViewModel>(id,itemsPerPage),
+            };
+            return this.View(viewModel);
+        }
+
+        //[HttpPost]
+        //public IActionResult All()
+        //{
+        //    return this.View();
+        //}
     }
 }

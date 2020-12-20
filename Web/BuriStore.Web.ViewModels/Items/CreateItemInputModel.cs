@@ -14,6 +14,10 @@
         public string Name { get; set; }
 
         [Required]
+        [Range(1, 99999)]
+        public double Price { get; set; }
+
+        [Required]
         [MinLength(50)]
         public string Description { get; set; }
 
