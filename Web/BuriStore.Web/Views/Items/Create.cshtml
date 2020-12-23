@@ -1,20 +1,20 @@
-﻿@model BuriStore.Web.ViewModels.Items.CreateItemInputModel
-
+﻿@using System.Linq
+@model BuriStore.Web.ViewModels.Items.CreateItemInputModel
 @{
     this.ViewData["Title"] = "Add New Item";
     var categoryItems = this.Model.CategoriesItems.Select(x => new SelectListItem(x.Value, x.Key));
+    Console.WriteLine(categoryItems);
 }
 
-<h1>@this.ViewData["Title"]</h1>
 
-<form method="post" class="col-md-6 offset-3">
-
+<form method="post" class="col-md-6 offset-3" enctype="multipart/form-data">
+    <h1>@this.ViewData["Title"]</h1>
     <div asp-validation-summary="All" class=text-danger></div>
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class=text-danger></span>
-    </div>  <div class="form-group">
+    </div> <div class="form-group">
         <label asp-for="Price"></label>
         <input asp-for="Price" class="form-control" />
         <span asp-validation-for="Price" class=text-danger></span>
@@ -29,6 +29,11 @@
         <select asp-for="CategoryId" class="form-control" asp-items="categoryItems"></select>
         <span asp-validation-for="CategoryId" class=text-danger></span>
     </div>
+    <div class="form-group">
+        <label asp-for="Images"></label>
+        <input asp-for="Images" class="form-control" />
+        <span asp-validation-for="Images" class=text-danger></span>
+    </div>
     <div id="ComponentsContainer">
         <label asp-for="Components"></label>
         <a class="btn btn-success" onclick="AddComponents()">+</a>
@@ -41,7 +46,7 @@
         var componentIndex = 0;
         function AddComponents() {
             console.log("AddComponents()");
-            $("#ComponentsContainer").append("<div class='form-control'>Name: <input type='text' name='Components["+componentIndex+"].ComponentName' />   Type: <input type='text' name='Components["+componentIndex+"].ComponentType'/> </div>")
+            $("#ComponentsContainer").append("<div class='form-control'>Name: <input type='text' name='Components[" + componentIndex + "].ComponentName' />   Type: <input type='text' name='Components[" + componentIndex + "].ComponentType'/> </div>")
             componentIndex++;
         }
     </script>

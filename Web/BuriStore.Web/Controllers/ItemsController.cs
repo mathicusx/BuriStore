@@ -10,6 +10,7 @@
     using BuriStore.Data.Models;
     using BuriStore.Services.Data;
     using BuriStore.Web.ViewModels.Items;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
@@ -18,13 +19,16 @@
     {
         private readonly IItemsService itemsService;
         private readonly ICategoriesService categoriesService;
+        private readonly IWebHostEnvironment environment;
 
         public ItemsController(
             IItemsService itemsService,
-            ICategoriesService categoriesService)
+            ICategoriesService categoriesService,
+            IWebHostEnvironment environment)
         {
             this.itemsService = itemsService;
             this.categoriesService = categoriesService;
+            this.environment = environment;
         }
 
         public IActionResult Create()
@@ -35,7 +39,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateItemInputModel input)
+        public async Task<IActionResult> Create(CreateItemInputModel input, string imagePath)
         {
             if (!this.ModelState.IsValid)
             {
@@ -43,11 +47,22 @@
                 return this.View(input);
             }
 
-            await this.itemsService.CreateAsync(input);
+            try
+            {
+                await this.itemsService.CreateAsync(input, $"{this.environment.ContentRootPath}/images");
+
+            }
+            catch (Exception exception)
+            {
+
+                this.ModelState.AddModelError(string.Empty, exception.Message);
+                return this.View(input);
+            }
+
             return this.Redirect("/");
         }
 
-        public IActionResult All(int id = 1 )
+        public IActionResult All(int id = 1)
         {
             const int itemsPerPage = 12;
             var viewModel = new ItemsListViewModel
@@ -55,15 +70,9 @@
                 ItemsPerPage = itemsPerPage,
                 PageNumber = id,
                 ItemsCount = this.itemsService.GetCount(),
-                Items = this.itemsService.GetAll<ItemsInListViewModel>(id,itemsPerPage),
+                Items = this.itemsService.GetAll<ItemsInListViewModel>(id, itemsPerPage),
             };
             return this.View(viewModel);
         }
-
-        //[HttpPost]
-        //public IActionResult All()
-        //{
-        //    return this.View();
-        //}
     }
 }

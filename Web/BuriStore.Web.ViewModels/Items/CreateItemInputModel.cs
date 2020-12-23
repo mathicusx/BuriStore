@@ -6,6 +6,7 @@
     using System.Text;
 
     using BuriStore.Data.Models;
+    using Microsoft.AspNetCore.Http;
 
     public class CreateItemInputModel
     {
@@ -22,6 +23,9 @@
         public string Description { get; set; }
 
         public int CategoryId { get; set; }
+
+        [Required]
+        public IEnumerable<IFormFile> Images { get; set; }
 
         public IEnumerable<ItemComponentInputModel> Components { get; set; }
 

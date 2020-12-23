@@ -9,11 +9,10 @@
 
     public interface IItemsService
     {
-        Task CreateAsync(CreateItemInputModel input);
+        Task CreateAsync(CreateItemInputModel input, string imagePath);
 
         IEnumerable<T> GetAll<T>(int page, int itemsPerPage);
 
         public int GetCount();
-            
     }
 }

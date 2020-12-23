@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -13,6 +14,7 @@
 
     public class ItemsService : IItemsService
     {
+        private readonly string[] AllowedExtensions = new[] { "jpg", "png", "gif" };
         private readonly IDeletableEntityRepository<Item> itemsRepository;
         private readonly IDeletableEntityRepository<Component> componentsRepository;
 
@@ -24,7 +26,7 @@
             this.componentsRepository = componentsRepository;
         }
 
-        public async Task CreateAsync(CreateItemInputModel input)
+        public async Task CreateAsync(CreateItemInputModel input, string imagePath)
         {
             var item = new Item()
             {
@@ -49,8 +51,29 @@
                 });
             }
 
-            await this.itemsRepository.AddAsync(item);
-            await this.itemsRepository.SaveChangesAsync();
+            Directory.CreateDirectory($"{imagePath}/items/");
+            foreach (var image in input.Images)
+            {
+                var extension = Path.GetExtension(image.FileName);
+                if (!this.AllowedExtensions.Any(x => extension.EndsWith(x)))
+                {
+                    throw new Exception($"invalid image extension {extension}");
+                }
+
+                var dbImage = new Image
+                {
+                    Extension = extension,
+                };
+
+                item.Images.Add(dbImage);
+
+                var physicalPath = $"{imagePath}/items/{dbImage.Id}.{extension}";
+                using Stream fileStream = new FileStream(imagePath, FileMode.Create);
+                await image.CopyToAsync(fileStream);
+
+                await this.itemsRepository.AddAsync(item);
+                await this.itemsRepository.SaveChangesAsync();
+            }
         }
 
         public IEnumerable<T> GetAll<T>(int page, int itemsPerPage)
@@ -66,7 +89,7 @@
 
         public int GetCount()
         {
-           return this.itemsRepository.All().Count();
+            return this.itemsRepository.All().Count();
         }
     }
 }
