@@ -26,10 +26,11 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Item, ItemsInListViewModel>()
-                .ForMember(x => x.ImageUrl, opt =>
-                opt.MapFrom(i => i.Images
-                .FirstOrDefault().RemoteImageUrl != null ?
-                i.Images.FirstOrDefault().RemoteImageUrl : "/images/items/" + i.Images.FirstOrDefault().Id + "." + i.Images.FirstOrDefault().Extension));
+                .ForMember(i => i.ImageUrl, opt =>
+                opt.MapFrom(i =>
+                i.Images.FirstOrDefault().RemoteImageUrl != null ?
+                i.Images.FirstOrDefault().RemoteImageUrl :
+                "/images/items/" + i.Images.FirstOrDefault().Id + "." + i.Images.FirstOrDefault().Extension));
         }
     }
 }

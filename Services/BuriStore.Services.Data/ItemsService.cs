@@ -68,12 +68,12 @@
                 item.Images.Add(dbImage);
 
                 var physicalPath = $"{imagePath}/items/{dbImage.Id}.{extension}";
-                using Stream fileStream = new FileStream(imagePath, FileMode.Create);
+                using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
                 await image.CopyToAsync(fileStream);
-
-                await this.itemsRepository.AddAsync(item);
-                await this.itemsRepository.SaveChangesAsync();
             }
+
+            await this.itemsRepository.AddAsync(item);
+            await this.itemsRepository.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetAll<T>(int page, int itemsPerPage)

@@ -49,13 +49,14 @@
 
             try
             {
-                await this.itemsService.CreateAsync(input, $"{this.environment.ContentRootPath}/images");
+                await this.itemsService.CreateAsync(input, $"{this.environment.WebRootPath}/images");
 
             }
             catch (Exception exception)
             {
 
                 this.ModelState.AddModelError(string.Empty, exception.Message);
+                input.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
                 return this.View(input);
             }
 

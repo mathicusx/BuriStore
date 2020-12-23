@@ -24,7 +24,6 @@
 
         public int CategoryId { get; set; }
 
-        [Required]
         public IEnumerable<IFormFile> Images { get; set; }
 
         public IEnumerable<ItemComponentInputModel> Components { get; set; }
