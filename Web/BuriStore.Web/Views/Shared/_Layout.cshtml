@@ -1,6 +1,7 @@
 ﻿@using BuriStore.Common
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,61 +10,101 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/style.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-dark border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) && (this.User.Identity.IsAuthenticated))
-                        {
+
+    <div id="wrapper" class="page-wrapper">
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-light bg-dark border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="nav-link text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial" />
+                        <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Items" asp-action="Create">Add Item</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-                        }
-                        <li class="nav-item">
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle bg-dark border-dark" type="button" data-toggle="dropdown">
-                                    Products
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="All">All Products</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                            @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) && (this.User.Identity.IsAuthenticated))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Items" asp-action="Create">Add Item</a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle bg-dark border-dark" type="button" data-toggle="dropdown">
+                                        Products
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="All">All Products</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
 
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @this.RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer bg-dark     text-muted">
         <div class="container">
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                @this.RenderBody()
+            </main>
         </div>
-    </footer>
+        
+        <footer class="footer bg-dark text-center">
+                    <div class="bg-dark">
+                        <div class="row bg-dark text-white-50">
+                            <div class="col-4">
+                                <div class="widget bg-dark">
+                                    <h4 class="widget-title bg-dark text-white-50">Useful Links</h4><!-- End .widget-title -->
+
+                                    <ul class="widget-list bg-dark text-white-50">
+                                        <li><a href="about.html">About @GlobalConstants.SystemName</a></li>
+                                        <li><a href="contact.html">Contact us</a></li>
+                                    </ul><!-- End .widget-list -->
+                                </div><!-- End .widget -->
+                            </div><!-- End .col-sm-6 col-lg-3 -->
+
+                            <div class="col-4">
+                                <div class="widget bg-dark">
+                                    <h4 class="widget-title bg-dark text-white-50">Customer Service</h4><!-- End .widget-title -->
+
+                                    <ul class="widget-list bg-dark text-white-50">
+                                        <li><a href="#">Payment Methods</a></li>
+                                        <li><a href="#">Money-back guarantee!</a></li>
+                                        <li><a href="#">Returns</a></li>
+                                    </ul><!-- End .widget-list -->
+                                </div><!-- End .widget -->
+                            </div><!-- End .col-sm-6 col-lg-3 -->
+                             <div class="col-4">
+                                <div class="widget bg-dark">
+                                    <h4 class="widget-title bg-dark text-white-50">Policies</h4><!-- End .widget-title -->
+
+                                    <ul class="widget-list bg-dark text-white-50">
+                                        <li><a href="#">Terms and conditions</a></li>
+                                        <li><a href="#">Privacy Policy</a></li>
+                                    </ul><!-- End .widget-list -->
+                                </div><!-- End .widget -->
+                            </div><!-- End .col-sm-6 col-lg-3 -->
+                            
+                        </div><!-- End .row -->
+                    </div><!-- End .container -->                   
+            </footer><!-- End .footer -->
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>

@@ -54,7 +54,7 @@
             Directory.CreateDirectory($"{imagePath}/items/");
             foreach (var image in input.Images)
             {
-                var extension = Path.GetExtension(image.FileName);
+                var extension = Path.GetExtension(image.FileName).TrimStart('.');
                 if (!this.AllowedExtensions.Any(x => extension.EndsWith(x)))
                 {
                     throw new Exception($"invalid image extension {extension}");
