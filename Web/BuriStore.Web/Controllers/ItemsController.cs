@@ -76,9 +76,10 @@
             return this.View(viewModel);
         }
 
-        public IActionResult ProductById()
+        public IActionResult ItemById(int id)
         {
-            return this.View();
+            var item = this.itemsService.GetById<SingleItemViewModel>(id);
+            return this.View(item);
         }
     }
 }

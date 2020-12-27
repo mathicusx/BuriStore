@@ -14,7 +14,7 @@
 
     public class ItemsService : IItemsService
     {
-        private readonly string[] AllowedExtensions = new[] { "jpg", "png", "gif" };
+        private readonly string[] allowedExtensions = new[] { "jpg", "png", "gif" };
         private readonly IDeletableEntityRepository<Item> itemsRepository;
         private readonly IDeletableEntityRepository<Component> componentsRepository;
 
@@ -55,7 +55,7 @@
             foreach (var image in input.Images)
             {
                 var extension = Path.GetExtension(image.FileName).TrimStart('.');
-                if (!this.AllowedExtensions.Any(x => extension.EndsWith(x)))
+                if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
                 {
                     throw new Exception($"invalid image extension {extension}");
                 }
@@ -85,6 +85,15 @@
                 .To<T>()
                 .ToList();
             return items;
+        }
+
+        public T GetById<T>(int id)
+        {
+          var item = this.itemsRepository.AllAsNoTracking().
+                Where(x => x.Id == id)
+                .To<T>().FirstOrDefault();
+
+          return item;
         }
 
         public int GetCount()

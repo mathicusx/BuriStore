@@ -14,5 +14,7 @@
         IEnumerable<T> GetAll<T>(int page, int itemsPerPage);
 
         public int GetCount();
+
+        T GetById<T>(int id);
     }
 }

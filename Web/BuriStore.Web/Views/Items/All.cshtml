@@ -1,10 +1,6 @@
 ﻿@model BuriStore.Web.ViewModels.Items.ItemsListViewModel
-@{
-    this.ViewData["Title"] = "All Our Products Page...";
-}
 
-<h1>@this.ViewData["Title"]</h1>
-<hr />
+    <hr />
 <div class="row">
     @foreach (var item in this.Model.Items)
     {
@@ -13,7 +9,7 @@
             <div class="card-body">
                 <h5 class="card-title">@item.Name</h5>
                 <h4 class="card-deck">@item.Price$</h4>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a class="btn btn-primary" asp-action="ItemById" asp-route-id="@item.Id">Product Info</a>
             </div>
         </div>
     }
@@ -28,7 +24,7 @@
         {
             @if (i > 0)
             {
-                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">1</a></li>
+                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
             }
         }
         <li class="page-item active" aria-current="page">
@@ -41,7 +37,7 @@
         {
             @if (i <= Model.PagesCount)
             {
-                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">1</a></li>
+                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
             }
         }
         <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
