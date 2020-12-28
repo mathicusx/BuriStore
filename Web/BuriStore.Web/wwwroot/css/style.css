@@ -410,6 +410,9 @@ blockquote {
         padding-right: 70px
     }
 
+    .ratingStar:hover {
+        background-color: yellow;
+    }
     .col-xxl {
         -ms-flex-preferred-size: 0;
         flex-basis: 0;

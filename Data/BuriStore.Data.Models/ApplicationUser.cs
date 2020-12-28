@@ -16,7 +16,7 @@ namespace BuriStore.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
-            this.Reviews = new HashSet<Review>();
+            this.Votes = new HashSet<Vote>();
         }
 
         // Audit info
@@ -35,6 +35,6 @@ namespace BuriStore.Data.Models
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
-        public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }

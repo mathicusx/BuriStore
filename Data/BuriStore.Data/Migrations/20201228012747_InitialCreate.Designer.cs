@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuriStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201223020801_InitialCreate")]
+    [Migration("20201228012747_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -291,6 +291,37 @@ namespace BuriStore.Data.Migrations
                     b.ToTable("ItemComponents");
                 });
 
+            modelBuilder.Entity("BuriStore.Data.Models.Vote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Votes");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -436,6 +467,23 @@ namespace BuriStore.Data.Migrations
                     b.Navigation("Item");
                 });
 
+            modelBuilder.Entity("BuriStore.Data.Models.Vote", b =>
+                {
+                    b.HasOne("BuriStore.Data.Models.Item", "Item")
+                        .WithMany("Votes")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BuriStore.Data.Models.ApplicationUser", "User")
+                        .WithMany("Votes")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Item");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("BuriStore.Data.Models.ApplicationRole", null)
@@ -494,6 +542,8 @@ namespace BuriStore.Data.Migrations
                     b.Navigation("Logins");
 
                     b.Navigation("Roles");
+
+                    b.Navigation("Votes");
                 });
 
             modelBuilder.Entity("BuriStore.Data.Models.Category", b =>
@@ -511,6 +561,8 @@ namespace BuriStore.Data.Migrations
                     b.Navigation("Components");
 
                     b.Navigation("Images");
+
+                    b.Navigation("Votes");
                 });
 #pragma warning restore 612, 618
         }

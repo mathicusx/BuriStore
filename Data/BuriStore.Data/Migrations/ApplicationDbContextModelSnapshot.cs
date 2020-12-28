@@ -289,7 +289,7 @@ namespace BuriStore.Data.Migrations
                     b.ToTable("ItemComponents");
                 });
 
-            modelBuilder.Entity("BuriStore.Data.Models.Review", b =>
+            modelBuilder.Entity("BuriStore.Data.Models.Vote", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -308,8 +308,8 @@ namespace BuriStore.Data.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<byte>("Value")
-                        .HasColumnType("tinyint");
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -317,7 +317,7 @@ namespace BuriStore.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -465,16 +465,16 @@ namespace BuriStore.Data.Migrations
                     b.Navigation("Item");
                 });
 
-            modelBuilder.Entity("BuriStore.Data.Models.Review", b =>
+            modelBuilder.Entity("BuriStore.Data.Models.Vote", b =>
                 {
                     b.HasOne("BuriStore.Data.Models.Item", "Item")
-                        .WithMany("Reviews")
+                        .WithMany("Votes")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BuriStore.Data.Models.ApplicationUser", "User")
-                        .WithMany("Reviews")
+                        .WithMany("Votes")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Item");
@@ -539,9 +539,9 @@ namespace BuriStore.Data.Migrations
 
                     b.Navigation("Logins");
 
-                    b.Navigation("Reviews");
-
                     b.Navigation("Roles");
+
+                    b.Navigation("Votes");
                 });
 
             modelBuilder.Entity("BuriStore.Data.Models.Category", b =>
@@ -560,7 +560,7 @@ namespace BuriStore.Data.Migrations
 
                     b.Navigation("Images");
 
-                    b.Navigation("Reviews");
+                    b.Navigation("Votes");
                 });
 #pragma warning restore 612, 618
         }
