@@ -4,12 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using BuriStore.Common;
     using BuriStore.Data;
     using BuriStore.Data.Common.Repositories;
     using BuriStore.Data.Models;
     using BuriStore.Services.Data;
     using BuriStore.Web.ViewModels.Items;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,6 +32,7 @@
             this.environment = environment;
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult Create()
         {
             var viewModel = new CreateItemInputModel();
@@ -38,6 +40,7 @@
             return this.View(viewModel);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateItemInputModel input, string imagePath)
         {

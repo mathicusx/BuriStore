@@ -8,12 +8,13 @@
     using BuriStore.Data;
     using BuriStore.Data.Common.Repositories;
     using BuriStore.Data.Models;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
     [Area("Administration")]
-    public class CategoriesController : Controller
+    public class CategoriesController : AdministrationController
     {
         private readonly IDeletableEntityRepository<Category> dataRepository;
 
